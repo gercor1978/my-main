@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aureum Man — El Nuevo Estándar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.0.18/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/index.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-soft: #C5A059;
+            --dark: #0D0D0D;
+            --dark-2: #151515;
+            --dark-3: #1A1A1A;
+            --ivory: #F5F2EC;
+            --gray: #8A8A8A;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--ivory);
+            overflow-x: hidden;
+        }
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .border-gold { border-color: var(--gold); }
+        
+        /* Liquid Gold Button */
+        .btn-gold {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            transition: color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1;
+        }
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 25%, #C5A059 50%, #D4AF37 75%, #B8860B 100%);
+            background-size: 200% 200%;
+            animation: goldShimmer 3s ease infinite;
+            transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+        .btn-gold:hover::before {
+            left: 0;
+        }
+        .btn-gold:hover {
+            color: #0D0D0D;
+            font-weight: 600;
+        }
+        @keyframes goldShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Product Card Hover */
+        .product-card .product-img {
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .product-card:hover .product-img {
+            transform: scale(1.08);
+        }
+        .product-card .add-btn {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .product-card:hover .add-btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Gold Divider */
+        .gold-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        /* Subtle Gold Glow */
+        .gold-glow {
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.08);
+        }
+        
+        /* Navbar Scroll */
+        .nav-scrolled {
+            background-color: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        /* Hero Overlay */
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(13,13,13,0.3) 0%, rgba(13,13,13,0.1) 40%, rgba(13,13,13,0.6) 80%, rgba(13,13,13,1) 100%);
+        }
+        
+        /* Fade In Animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-soft); border-radius: 4px; }
+        
+        /* Newsletter input */
+        .newsletter-input {
+            background: transparent;
+            border-bottom: 1px solid #333;
+            transition: border-color 0.3s ease;
+        }
+        .newsletter-input:focus {
+            outline: none;
+            border-bottom-color: var(--gold);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0D0D0D',
+                        'dark-2': '#151515',
+                        'dark-3': '#1A1A1A',
+                        gold: '#D4AF37',
+                        'gold-soft': '#C5A059',
+                        ivory: '#F5F2EC',
+                        'gray-soft': '#8A8A8A',
+                    },
+                    fontFamily: {
+                        display: ['Space Grotesk', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-body antialiased">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="font-display font-bold text-lg tracking-[0.35em] text-ivory hover:text-gold transition-colors duration-300">
+                AUREUM MAN
+            </a>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#collections" class="text-sm tracking-wider text-ivory/80 hover:text-gold transition-colors duration-300">Colecciones</a>
+                <a href="#products" class="text-sm tracking-wider text-ivory/80 hover:text-gold transition-colors duration-300">Camisetas</a>
+                <a href="#manifesto" class="text-sm tracking-wider text-ivory/80 hover:text-gold transition-colors duration-300">La Alquimia</a>
+            </div>
+            
+            <!-- Icons -->
+            <div class="flex items-center gap-5">
+                <button class="text-ivory/80 hover:text-gold transition-colors duration-300" aria-label="Buscar">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button class="hidden sm:block text-ivory/80 hover:text-gold transition-colors duration-300" aria-label="Cuenta">
+                    <i data-lucide="user" class="w-5 h-5"></i>
+                </button>
+                <button class="relative text-ivory/80 hover:text-gold transition-colors duration-300" aria-label="Carrito">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold text-dark text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+                </button>
+                <button id="menu-toggle" class="md:hidden text-ivory/80 hover:text-gold transition-colors duration-300" aria-label="Menú">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-dark/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
+        <button id="menu-close" class="absolute top-6 right-6 text-ivory/80 hover:text-gold transition-colors" aria-label="Cerrar menú">
+            <i data-lucide="x" class="w-7 h-7"></i>
+        </button>
+        <a href="#collections" class="font-display text-2xl tracking-widest text-ivory hover:text-gold transition-colors mobile-link">Colecciones</a>
+        <a href="#products" class="font-display text-2xl tracking-widest text-ivory hover:text-gold transition-colors mobile-link">Camisetas</a>
+        <a href="#manifesto" class="font-display text-2xl tracking-widest text-ivory hover:text-gold transition-colors mobile-link">La Alquimia</a>
+        <div class="gold-line w-24 mt-4"></div>
+        <div class="flex gap-6 mt-4">
+            <button class="text-ivory/80 hover:text-gold transition-colors"><i data-lucide="search" class="w-6 h-6"></i></button>
+            <button class="text-ivory/80 hover:text-gold transition-colors"><i data-lucide="user" class="w-6 h-6"></i></button>
+            <button class="relative text-ivory/80 hover:text-gold transition-colors">
+                <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold text-dark text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="https://image.qwenlm.ai/public_source/5c69f261-778e-4073-8111-693b41b85f2d/1646248f3-5d56-407f-8a3e-628678099c90.png" 
+                 alt="Algodón premium con destellos dorados" 
+                 class="w-full h-full object-cover scale-105 animate-[pulse_8s_ease-in-out_infinite]">
+        </div>
+        <div class="hero-overlay absolute inset-0"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center pt-20">
+            <div class="fade-up">
+                <p class="font-display text-xs md:text-sm tracking-[0.4em] text-gold mb-6 uppercase">Colección 2026 · Edición Limitada</p>
+                <h1 class="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-ivory leading-[1.05] mb-8">
+                    EL NUEVO ESTÁNDAR<br>
+                    <span class="text-gold">DE TU ARMARIO.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-ivory/70 max-w-2xl mx-auto mb-12 font-light tracking-wide">
+                    Calidad de 24 quilates para el día a día.
+                </p>
+                <a href="#products" class="btn-gold inline-block px-10 py-4 font-display text-sm tracking-[0.25em] uppercase">
+                    Explorar Colección
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 fade-up">
+            <span class="text-[10px] tracking-[0.3em] text-ivory/50 uppercase">Scroll</span>
+            <div class="w-[1px] h-10 bg-gradient-to-b from-gold to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Manifesto Section -->
+    <section id="manifesto" class="relative py-28 md:py-40 bg-dark-2">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="fade-up">
+                <div class="flex items-center justify-center gap-4 mb-10">
+                    <div class="gold-line w-16"></div>
+                    <span class="font-display text-xs tracking-[0.4em] text-gold uppercase">El Manifiesto</span>
+                    <div class="gold-line w-16"></div>
+                </div>
+                <p class="font-display text-2xl md:text-4xl lg:text-5xl text-ivory leading-[1.4] font-light tracking-tight">
+                    No seguimos tendencias; <span class="text-gold italic">las forjamos.</span>
+                </p>
+                <div class="gold-line w-24 mx-auto my-10"></div>
+                <p class="text-base md:text-lg text-ivory/60 leading-relaxed max-w-2xl mx-auto font-light">
+                    Inspirados en la pureza y el valor imperecedero del oro, creamos camisetas de alta calidad con un diseño urbano, limpio y con actitud. Ropa auténtica para quienes saben que el verdadero valor no se presume, se lleva.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24 md:py-32 bg-dark">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 fade-up">
+                <div>
+                    <span class="font-display text-xs tracking-[0.4em] text-gold uppercase">Destacados</span>
+                    <h2 class="font-display text-3xl md:text-5xl font-bold text-ivory mt-3 tracking-tight">Camisetas Aureum</h2>
+                </div>
+                <a href="#" class="hidden md:inline-flex items-center gap-2 text-sm text-ivory/60 hover:text-gold transition-colors duration-300 tracking-wider mt-4 md:mt-0">
+                    Ver todo el catálogo <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            
+            <!-- Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                
+                <!-- Product 1 -->
+                <div class="product-card group cursor-pointer fade-up">
+                    <div class="relative overflow-hidden bg-dark-2 aspect-[3/4] mb-5">
+                        <img src="https://image.qwenlm.ai/public_source/5c69f261-778e-4073-8111-693b41b85f2d/1785f85db-6c4a-4c24-847a-e1c2fe92047a.png" 
+                             alt="Midas Oversize Tee" 
+                             class="product-img w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-gold text-dark text-[10px] font-bold tracking-widest px-3 py-1 uppercase">Nuevo</div>
+                        <button class="add-btn absolute bottom-4 left-4 right-4 btn-gold py-3 text-xs tracking-[0.2em] uppercase font-display">
+                            Añadir al carrito
+                        </button>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h3 class="font-display text-base text-ivory tracking-wide">Midas Oversize Tee</h3>
+                            <p class="text-xs text-ivory/40 mt-1">Algodón premium · Negro</p>
+                        </div>
+                        <span class="font-display text-base text-gold">€25.00</span>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card group cursor-pointer fade-up">
+                    <div class="relative overflow-hidden bg-dark-2 aspect-[3/4] mb-5">
+                        <img src="https://image.qwenlm.ai/public_source/5c69f261-778e-4073-8111-693b41b85f2d/1f869d6e5-c270-4e48-b785-bdbf994980ff.png" 
+                             alt="Aurum Element 79" 
+                             class="product-img w-full h-full object-cover">
+                        <button class="add-btn absolute bottom-4 left-4 right-4 btn-gold py-3 text-xs tracking-[0.2em] uppercase font-display">
+                            Añadir al carrito
+                        </button>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h3 class="font-display text-base text-ivory tracking-wide">Aurum Element 79</h3>
+                            <p class="text-xs text-ivory/40 mt-1">Edición geométrica · Grafito</p>
+                        </div>
+                        <span class="font-display text-base text-gold">€25.00</span>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card group cursor-pointer fade-up">
+                    <div class="relative overflow-hidden bg-dark-2 aspect-[3/4] mb-5">
+                        <img src="https://image.qwenlm.ai/public_source/5c69f261-778e-4073-8111-693b41b85f2d/1bba3835a-437f-4e51-a0f4-6f74c6b6d878.png" 
+                             alt="Magnum Opus Black" 
+                             class="product-img w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-dark-3 border border-gold/30 text-gold text-[10px] font-bold tracking-widest px-3 py-1 uppercase">Exclusivo</div>
+                        <button class="add-btn absolute bottom-4 left-4 right-4 btn-gold py-3 text-xs tracking-[0.2em] uppercase font-display">
+                            Añadir al carrito
+                        </button>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h3 class="font-display text-base text-ivory tracking-wide">Magnum Opus Black</h3>
+                            <p class="text-xs text-ivory/40 mt-1">Ribete dorado · Negro mate</p>
+                        </div>
+                        <span class="font-display text-base text-gold">€25.00</span>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card group cursor-pointer fade-up">
+                    <div class="relative overflow-hidden bg-dark-2 aspect-[3/4] mb-5">
+                        <img src="https://image.qwenlm.ai/public_source/5c69f261-778e-4073-8111-693b41b85f2d/147e6a830-9eae-43d3-a8b1-6450ae1281a1.png" 
+                             alt="Ivory Emblem Tee" 
+                             class="product-img w-full h-full object-cover">
+                        <button class="add-btn absolute bottom-4 left-4 right-4 btn-gold py-3 text-xs tracking-[0.2em] uppercase font-display">
+                            Añadir al carrito
+                        </button>
+                    </div>
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <h3 class="font-display text-base text-ivory tracking-wide">Ivory Emblem Tee</h3>
+                            <p class="text-xs text-ivory/40 mt-1">Emblema dorado · Marfil</p>
+                        </div>
+                        <span class="font-display text-base text-gold">€25.00</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-12 md:hidden">
+                <a href="#" class="inline-flex items-center gap-2 text-sm text-ivory/60 hover:text-gold transition-colors duration-300 tracking-wider">
+                    Ver todo el catálogo <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="gold-line max-w-7xl mx-auto"></div>
+
+    <!-- Features Strip -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6">
+            <div class="text-center fade-up">
+                <i data-lucide="gem" class="w-8 h-8 text-gold mx-auto mb-4"></i>
+                <h4 class="font-display text-sm tracking-[0.2em] text-ivory uppercase mb-2">Calidad 24K</h4>
+                <p class="text-sm text-ivory/50">Algodón orgánico de fibra larga, teñido en frío.</p>
+            </div>
+            <div class="text-center fade-up">
+                <i data-lucide="truck" class="w-8 h-8 text-gold mx-auto mb-4"></i>
+                <h4 class="font-display text-sm tracking-[0.2em] text-ivory uppercase mb-2">Envío Premium</h4>
+                <p class="text-sm text-ivory/50">Gratis en pedidos superiores a €60. Entrega en 48h.</p>
+            </div>
+            <div class="text-center fade-up">
+                <i data-lucide="shield-check" class="w-8 h-8 text-gold mx-auto mb-4"></i>
+                <h4 class="font-display text-sm tracking-[0.2em] text-ivory uppercase mb-2">Garantía Aureum</h4>
+                <p class="text-sm text-ivory/50">Devolución sin preguntas durante 30 días.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-2 pt-20 pb-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+                    <a href="#" class="font-display font-bold text-lg tracking-[0.35em] text-ivory">AUREUM MAN</a>
+                    <p class="text-sm text-ivory/50 mt-4 leading-relaxed">
+                        Forjados en oro. Vestidos con actitud. El nuevo estándar de la moda urbana masculina.
+                    </p>
+                    <div class="flex gap-4 mt-6">
+                        <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center text-ivory/60 hover:text-gold hover:border-gold transition-all duration-300" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center text-ivory/60 hover:text-gold hover:border-gold transition-all duration-300" aria-label="TikTok">
+                            <i data-lucide="music-2" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center text-ivory/60 hover:text-gold hover:border-gold transition-all duration-300" aria-label="Twitter">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Links -->
+                <div>
+                    <h5 class="font-display text-xs tracking-[0.3em] text-gold uppercase mb-6">Navegación</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#collections" class="text-sm text-ivory/60 hover:text-gold transition-colors">Colecciones</a></li>
+                        <li><a href="#products" class="text-sm text-ivory/60 hover:text-gold transition-colors">Camisetas</a></li>
+                        <li><a href="#manifesto" class="text-sm text-ivory/60 hover:text-gold transition-colors">La Alquimia</a></li>
+                        <li><a href="#" class="text-sm text-ivory/60 hover:text-gold transition-colors">Guía de tallas</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Help -->
+                <div>
+                    <h5 class="font-display text-xs tracking-[0.3em] text-gold uppercase mb-6">Ayuda</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-ivory/60 hover:text-gold transition-colors">Envíos y devoluciones</a></li>
+                        <li><a href="#" class="text-sm text-ivory/60 hover:text-gold transition-colors">Contacto</a></li>
+                        <li><a href="#" class="text-sm text-ivory/60 hover:text-gold transition-colors">Términos y condiciones</a></li>
+                        <li><a href="#" class="text-sm text-ivory/60 hover:text-gold transition-colors">Política de privacidad</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h5 class="font-display text-xs tracking-[0.3em] text-gold uppercase mb-6">Únete al Club Aureum</h5>
+                    <p class="text-sm text-ivory/50 mb-5">Acceso anticipado, drops exclusivos y un 10% en tu primera compra.</p>
+                    <form class="flex flex-col gap-4" onsubmit="event.preventDefault(); this.querySelector('button').textContent='¡Bienvenido!';">
+                        <input type="email" placeholder="Tu email" class="newsletter-input w-full py-3 text-sm text-ivory placeholder-ivory/30" required>
+                        <button type="submit" class="btn-gold py-3 text-xs tracking-[0.2em] uppercase font-display">Suscribirme</button>
+                    </form>
+                </div>
+                
+            </div>
+            
+            <!-- Bottom -->
+            <div class="gold-line mb-8"></div>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-ivory/40 tracking-wider">Copyright 2026 — Aureum Man. Todos los derechos reservados.</p>
+                <div class="flex items-center gap-6">
+                    <span class="text-xs text-ivory/40">Métodos de pago:</span>
+                    <div class="flex gap-3 text-ivory/40">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+                        <i data-lucide="wallet" class="w-5 h-5"></i>
+                        <i data-lucide="banknote" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                navbar.classList.remove('py-5');
+                navbar.classList.add('py-3');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+                navbar.classList.remove('py-3');
+                navbar.classList.add('py-5');
+            }
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Fade up on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        
+        // Add to cart interaction
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Añadido';
+                btn.style.color = '#0D0D0D';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.color = '';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
+
